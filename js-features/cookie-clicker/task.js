@@ -1,10 +1,9 @@
-let counter = document.getElementById("clicker__counter");
-let cookie = document.getElementById("cookie");
-let speed = document.getElementById("click__speed");
+const counter = document.getElementById("clicker__counter");
+const cookie = document.getElementById("cookie");
+const speed = document.getElementById("click__speed");
 
-function countClicks() {
-    counter.textContent ++;
-    cookie.width === 200 ? cookie.width += 100 : cookie.width -= 100;    
+function countClicks() {    
+    cookie.width = ++counter.textContent % 2 ? 250 : 200;
 }
 
 cookie.addEventListener('click', countClicks);
