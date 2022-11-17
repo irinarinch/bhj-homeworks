@@ -4,7 +4,8 @@ class Game {
     this.wordElement = container.querySelector('.word');
     this.winsElement = container.querySelector('.status__wins');
     this.lossElement = container.querySelector('.status__loss');
-
+    this.timerElement = container.querySelector('.status__timer');
+  
     this.reset();
 
     this.registerEvents();
@@ -17,15 +18,15 @@ class Game {
   }
 
   registerEvents() {
-    /*
-      TODO:
-      Написать обработчик события, который откликается
-      на каждый введённый символ.
-      В случае правильного ввода слова вызываем this.success()
-      При неправильном вводе символа - this.fail();
-     */
+    document.addEventListener('keydown', (e) => {
+      if (e.key.toLowerCase() === this.currentSymbol.textContent.toLowerCase() && this.timerElement.textContent > 0) {
+        this.success();          
+      } else {
+        this.fail();
+      }  
+    })
   }
-
+  
   success() {
     this.currentSymbol.classList.add('symbol_correct');
     this.currentSymbol = this.currentSymbol.nextElementSibling;
@@ -36,7 +37,7 @@ class Game {
     if (++this.winsElement.textContent === 10) {
       alert('Победа!');
       this.reset();
-    }
+    } 
     this.setNewWord();
   }
 
@@ -44,7 +45,8 @@ class Game {
     if (++this.lossElement.textContent === 5) {
       alert('Вы проиграли!');
       this.reset();
-    }
+    } 
+    
     this.setNewWord();
   }
 
@@ -52,6 +54,7 @@ class Game {
     const word = this.getWord();
 
     this.renderWord(word);
+    this.startTimer();    
   }
 
   getWord() {
@@ -84,7 +87,24 @@ class Game {
 
     this.currentSymbol = this.wordElement.querySelector('.symbol_current');
   }
+
+  startTimer() {
+    this.timerElement.textContent = Array.from(document.querySelectorAll('.symbol')).length;
+    const timerId = setInterval(start, 1000);
+
+    function start() {      
+      if (document.querySelector('.status__timer').textContent > 0) {
+        document.querySelector('.status__timer').textContent -= 1;        
+      } else {   
+        clearInterval(timerId);            
+      } 
+    }  
+  }
 }
 
 new Game(document.getElementById('game'))
+
+
+
+
 
