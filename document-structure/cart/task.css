@@ -1,10 +1,15 @@
 body {
-  font-family: Arial;
+  font-family: Arial;  
 }
+
 .cart__products {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.cart {
+  margin-left: 30px;
 }
 
 .cart__product {
@@ -19,6 +24,13 @@ body {
   padding: 2px 5px;
 }
 
+.cart__product-deleter {
+  color: red;
+  border: 1px;
+  cursor: pointer; 
+  
+}
+
 .cart__product-image {
   border-radius: 6px;
   margin-right: 10px;
@@ -26,10 +38,12 @@ body {
   height: 100px;
   object-fit: contain;
 }
+
 .product {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
+  margin-left: 30px;
 }
 .product__title {
   width: 100%;
@@ -82,10 +96,22 @@ body {
   cursor: pointer;
 }
 
+.product__remove {
+  background-color: red;
+  padding: 10px 20px;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 .product__add:hover {
   opacity: 0.8;
 }
 
 .product-shadow {
   position: absolute;
+}
+
+.hidden_element {
+  display: none;
 }
