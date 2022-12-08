@@ -9,3 +9,51 @@ body {
 .poll__title {
   margin-bottom: 20px;
 }
+
+.modal__content {
+  width: 400px;
+  height: 200px;
+  overflow: auto;
+  background: #fff;
+  position: relative;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.close_btn {
+  color: blue;
+  cursor: pointer;
+  padding: 20px; 
+}
+
+.poll__answer {
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  border: 1px solid gray;
+  margin-right: 3px;  
+}
+
+.poll__answer:hover {
+  color: white;
+}
+
+.hidden {
+  display: none;
+}
