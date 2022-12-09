@@ -12,21 +12,22 @@
     font-family: Golos, Arial, sans-serif;
     border: 1px solid #e2e2e2;
     box-sizing: border-box;
+    border-radius: 10px;
 }
 
 .btn {
   font-family: Golos, Arial, sans-serif;
   color: #fff;
-  background-color: #06f;
+  background-color: green;
   border: 1px solid transparent;
-  border-radius: 2px;
+  border-radius: 10px;
   box-sizing: border-box;
   cursor: pointer;
   display: inline-block;
   margin: 0 0 20px 0;
   overflow: hidden;
   outline: none;
-  padding: 8px 12px;
+  padding: 10px 12px;
   text-align: center;
   transition: 0.3s ease;
   text-decoration: none;
@@ -35,6 +36,11 @@
   white-space: nowrap;
   font-weight: 500;
   box-shadow: none;
+  width: 100%;
+}
+
+.btn:hover {
+  background-color: darkgreen;
 }
 
 .welcome {
@@ -44,4 +50,21 @@
 .welcome_active {
   display: block;
   text-align: center;
+}
+
+#invalid_values_message {
+  text-align: center;
+  color: red;
+}
+
+#logout__btn {
+  cursor: pointer;
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin-left: 10px;
+  padding: 5px 10px;
+}
+
+#logout__btn:hover {
+  background-color: lightgrey;
 }
