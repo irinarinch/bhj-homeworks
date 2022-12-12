@@ -1,32 +1,44 @@
-const hasTooltipElement = document.querySelectorAll('.has-tooltip');
+const elementHasTooltip = document.querySelectorAll('.has-tooltip');
+const tooltip = document.createElement('div');
 
-hasTooltipElement.forEach(element => {
-    const newTooltip = document.createElement('div');    
-    newTooltip.classList.add('tooltip');
+tooltip.classList.add('tooltip');
+tooltip.setAttribute('data-position', 'left');
 
-    newTooltip.textContent = element.title;
-    newTooltip.style.left = `${element.offsetLeft}px`;    
-    newTooltip.style.position = 'absolute'; 
-    newTooltip.setAttribute('data-position', 'top');    
-
-    element.insertAdjacentElement('afterend', newTooltip);
-
-    element.onclick = () => { 
-        if (document.querySelector('.tooltip_active')) {
-            document.querySelector('.tooltip_active').classList.remove('tooltip_active'); 
-        }             
-        newTooltip.classList.add('tooltip_active');
-
-        element.style.position = 'relative';
-
-        return false;
-    }
+elementHasTooltip.forEach(element => {
+    element.addEventListener('click', activateTooltip);    
 });
 
+function activateTooltip(event) {
+    event.preventDefault();
 
-/*
- newTooltip.style.left присвоила element.offsetLeft, но почему-то left на некоторых подсказках 
- принимает значения, отличные от значения element.offsetLeft (в меньшую сторону). Почему?
-*/
+    event.target.insertAdjacentElement('afterend', tooltip);
+    tooltip.innerText = `${event.target.title}`;
+    tooltip.classList.add('tooltip_active');
 
-// не поняла как использовать атрибут 'data-position'
+    event.target.style.position = 'relative';
+    tooltip.style.position = 'absolute';
+  
+    if (tooltip.getAttribute('data-position') === 'top') {
+        tooltip.style.top = `${event.target.offsetTop - tooltip.offsetHeight}px`;
+        tooltip.style.left = `${event.target.offsetLeft}px`;
+    } else if (tooltip.getAttribute('data-position') === 'left') {
+        elementHasTooltip.forEach(element => {
+            if (element.nextElementSibling !== tooltip) {
+                element.style.marginLeft = '';
+            }            
+        });
+
+        const difference = tooltip.offsetWidth - event.target.offsetLeft;
+        if (difference > 0) { 
+            event.target.style.marginLeft = difference+'px';
+        } 
+
+        tooltip.style.left = `${event.target.offsetLeft - tooltip.offsetWidth}px`; 
+        tooltip.style.top = `${event.target.offsetTop}px`;
+    } else if (tooltip.getAttribute('data-position') === 'right') {
+        tooltip.style.top = `${event.target.offsetTop}px`;
+        tooltip.style.left = `${event.target.offsetLeft + event.target.offsetWidth}px`; 
+    } else if (tooltip.getAttribute('data-position') === 'bottom') {        
+        tooltip.style.left = `${event.target.offsetLeft}px`;
+    }
+}
