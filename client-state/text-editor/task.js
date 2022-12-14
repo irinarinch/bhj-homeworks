@@ -6,9 +6,7 @@ textarea.addEventListener('input', () => {
     localStorage.setItem('text', textarea.value);
 })
 
-if (storedValue) {
-    textarea.value = storedValue;    
-} 
+textarea.value = storedValue;    
 
 btn.addEventListener('click', () => {
     localStorage.removeItem('text');

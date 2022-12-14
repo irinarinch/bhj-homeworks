@@ -7,7 +7,7 @@ const inputs = document.querySelectorAll('input');
 const logout__btn = document.getElementById('logout__btn');
 
 
-document.forms.signin__form.addEventListener('submit', (e) => {
+form.addEventListener('submit', (e) => {
     e.preventDefault();
 
     if (inputs[0].value === '' || inputs[1].value === '') {
@@ -15,25 +15,25 @@ document.forms.signin__form.addEventListener('submit', (e) => {
             form.insertAdjacentHTML('afterend', `
                 <div id="invalid_values_message">Укажите логин/пароль</div>
             `);
-            clearFields();                 
+            form.reset();                  
         } 
     } else {
         const xhr = new XMLHttpRequest();    
-    
+        xhr.responseType = 'json';
+
         xhr.open('POST', 'https://students.netoservices.ru/nestjs-backend/auth');
         
-        const formData = new FormData(document.forms.signin__form);    
-        
+        const formData = new FormData(form);    
+       
         xhr.send(formData); 
-        xhr.onload = () => {
-            const response = JSON.parse(xhr.response);
-            
-            if (response.success) {
-                user_id.textContent = response.user_id;
-                localStorage.setItem('user', response.user_id);
+        xhr.onload = () => {                     
+           
+            if (xhr.response.success) {
+                user_id.textContent = xhr.response.user_id;
+                localStorage.setItem('user', xhr.response.user_id);
                 changeCardContent(); 
             } else { 
-                clearFields();         
+                form.reset(); 
                 if (!document.getElementById('invalid_values_message')) {
                     form.insertAdjacentHTML('afterend', `
                         <div id="invalid_values_message">Неверный логин/пароль</div>
@@ -44,6 +44,12 @@ document.forms.signin__form.addEventListener('submit', (e) => {
     }    
 });
 
+form.addEventListener('input', () => {
+    const invalid_values_message = document.getElementById('invalid_values_message');
+    if (invalid_values_message) {
+        invalid_values_message.remove();
+    }            
+});
 
 if (storedUser) {
     user_id.textContent = storedUser;
@@ -60,17 +66,7 @@ function changeCardContent() {
     welcome_content.classList.add('welcome_active');
 }
 
-function clearFields() {
-    inputs.forEach(input => {
-        input.value = '';
-        input.addEventListener('input', () => {
-            const invalid_values_message = document.getElementById('invalid_values_message');
-            if (invalid_values_message) {
-                invalid_values_message.remove();
-            }            
-        });
-    });
-}
+
  
 
 

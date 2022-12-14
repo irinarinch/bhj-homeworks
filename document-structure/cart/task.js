@@ -7,7 +7,7 @@ const storedProducts = JSON.parse(localStorage.getItem('products'));
 const remove_cart_products_btn = document.getElementById('product__remove_btn');
 
 // проверяю хранилище
-if (storedProducts.length !== 0) {
+if (storedProducts) {
     cart.classList.remove('hidden_element');
     storedProducts.forEach(storedProduct => {
         cart__products.insertAdjacentHTML('beforeEnd', `
@@ -124,8 +124,12 @@ function saveCart() {
         src: element.querySelector('img').getAttribute('src'),
         count: element.querySelector('.cart__product-count').textContent,
     }));
-    
-    localStorage.setItem('products', JSON.stringify(arrayToStore));
+
+    if (arrayToStore.length > 0)  {
+        localStorage.setItem('products', JSON.stringify(arrayToStore));
+    } else {
+        localStorage.removeItem('products');
+    }
 }
 
 // удаление товаров из корзины
@@ -149,3 +153,21 @@ function deleteCartProduct() {
         saveCart(); 
     });
 }
+
+
+
+ 
+ 
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
